@@ -92,4 +92,8 @@ if ('config.default.php' == basename(__FILE__)) {
 
     // Register autoload of other external library, $classLoader is declared
     // in autoload.php of Fwlib, can use below.
+    $classLoader->addPrefix(
+        'Fwolf\Bin\ImapDeleteForMh',
+        __DIR__ .  '/ImapDeleteForMh/'
+    );
 }

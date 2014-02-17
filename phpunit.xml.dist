@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<phpunit
+  backupGlobals='false'
+  backupStaticAttributes='false'
+  bootstrap='config.default.php'
+  colors='true'
+  convertErrorsToExceptions='true'
+  convertNoticesToExceptions='true'
+  convertWarningsToExceptions='true'
+  forceCoversAnnotation='false'
+  mapTestClassNameToCoveredClassName='false'
+  processIsolation='false'
+  stopOnError='false'
+  stopOnFailure='false'
+  stopOnIncomplete='false'
+  stopOnSkipped='false'
+  strict='true'
+  timeoutForSmallTests='10'
+  timeoutForMediumTests='30'
+  timeoutForLargeTests='60'
+  verbose='false'
+>
+
+  <testsuites>
+    <testsuite name='Fwlib Test Suite'>
+      <directory phpVersion='5.3.0' phpVersionOperator='>='
+        >./ImapDeleteForMh/Test/</directory>
+    </testsuite>
+  </testsuites>
+
+  <groups>
+    <exclude>
+      <group>benchmark</group>
+      <group>selenium</group>
+    </exclude>
+  </groups>
+
+  <filter>
+    <whitelist processUncoveredFilesFromWhitelist='true'>
+      <directory>./ImapDeleteForMh/</directory>
+      <exclude>
+        <directory>./ImapDeleteForMh/Test/</directory>
+      </exclude>
+    </whitelist>
+  </filter>
+
+  <php>
+    <ini name='memory_limit' value='300m' />
+  </php>
+
+</phpunit>
