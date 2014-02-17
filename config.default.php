@@ -101,4 +101,6 @@ if ('config.default.php' == basename(__FILE__)) {
         'Fwolf\Bin\ImapDeleteForMh',
         __DIR__ .  '/ImapDeleteForMh/'
     );
+
+    require __DIR__ . '/vendor/autoload.php';
 }
