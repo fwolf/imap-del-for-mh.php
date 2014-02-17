@@ -85,9 +85,6 @@ if ('config.default.php' == basename(__FILE__)) {
 
     // Include autoloader of Fwlib, need before other library
     require $config['lib.path.fwlib'] . 'autoload.php';
-    // For backward compatible
-    define('FWOLFLIB', $config['lib.path.fwlib']);
-    require FWOLFLIB . 'func/config.php';
 
     // Deal with config, store in GlobalConfig instance
     GlobalConfig::getInstance()->load($config);

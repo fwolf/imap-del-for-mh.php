@@ -19,20 +19,22 @@
  * @version     1.0
  */
 
-// Include
-if (!defined('P2R')) define('P2R', __DIR__ . '/');
-require_once(__DIR__ . '/config.default.php');
-require_once FWOLFLIB . '/func/ecl.php';
-require_once FWOLFLIB . '/func/filesystem.php';
+use Fwlib\Config\GlobalConfig;
+use Fwlib\Util\UtilContainer;
+
+require __DIR__ . '/config.default.php';
 
 
-// Main body
+$globalConfig = GlobalConfig::getInstance();
+$utilContainer = UtilContainer::getInstance();
+$envUtil = $utilContainer->get('Env');
+
 
 // Init
 $ar_file = GetFileMh();
 $ar_file_ignore = GetFileIgnore();
 $i_done = 0;
-$i_done_max = GetCfg('imap-del-for-mh.batchsize');
+$i_done_max = $globalConfig->get('imap-del-for-mh.batchsize');
 $ar_mail = array();
 $ar_mbox = array();
 
@@ -61,7 +63,9 @@ if (!empty($ar_file))
  * @return  array
  */
 function GetFileIgnore () {
-    $ar = GetCfg('imap-del-for-mh.file.ignore');
+    global $globalConfig;
+
+    $ar = $globalConfig->get('imap-del-for-mh.file.ignore');
     if (empty($ar))
         return array();
 
@@ -81,7 +85,9 @@ function GetFileIgnore () {
  * @return  array
  */
 function GetFileMh () {
-    $s_path = GetCfg('imap-del-for-mh.dir.mh');
+    global $globalConfig;
+
+    $s_path = $globalConfig->get('imap-del-for-mh.dir.mh');
     if (empty($s_path) || !is_readable($s_path))
         return array();
 
@@ -96,28 +102,28 @@ function ImapConnect () {
     global $ar_mail, $ar_mbox;
 
     // Connect to imap
-    $ar_mail = GetCfg('imap-del-for-mh.mail');
+    $ar_mail = $globalConfig->get('imap-del-for-mh.mail');
     if (empty($ar_mail))
         return 0;
     if (!is_array($ar_mail))
         $ar_mail = array($ar_mail);
 
     foreach ($ar_mail as $account => $mail) {
-        $s_host = '{' . GetCfg('mail.server.'
-                . GetCfg('mail.account.' . $account . '.server')
+        $s_host = '{' . $globalConfig->get('mail.server.'
+                . $globalConfig->get('mail.account.' . $account . '.server')
                 . '.imap.host')
-            . ':' . GetCfg('mail.server.'
-                . GetCfg('mail.account.' . $account . '.server')
+            . ':' . $globalConfig->get('mail.server.'
+                . $globalConfig->get('mail.account.' . $account . '.server')
                 . '.imap.port')
             . '/imap/ssl/novalidate-cert}' . $mail['mailbox'];
         $ar_mbox[$account] = @imap_open($s_host
-            , GetCfg('mail.account.' . $account . '.user')
-            , GetCfg('mail.account.' . $account . '.pass')
+            , $globalConfig->get('mail.account.' . $account . '.user')
+            , $globalConfig->get('mail.account.' . $account . '.pass')
         );
         // Check error
         $rs = imap_last_error();
         if (!(false === $rs)) {
-            Ecl('Can\'t connect to ' . $account);
+            $envUtil->ecl('Can\'t connect to ' . $account);
             exit(-1);
         }
     }
@@ -133,21 +139,21 @@ function ImapConnect () {
 function ImapDel ($s_file) {
     global $ar_mbox, $ar_uid;
 
-    Ecl("\n[" . date('Y-m-d H:i:s') . ']');
-    $s_file = GetCfg('imap-del-for-mh.dir.mh') . $s_file;
+    $envUtil->ecl("\n[" . date('Y-m-d H:i:s') . ']');
+    $s_file = $globalConfig->get('imap-del-for-mh.dir.mh') . $s_file;
     ImapSearch($s_file);
 
     if (empty($ar_uid)) {
         // Nothing found, move to error
-        MailFileMove($s_file, GetCfg('imap-del-for-mh.dir.error'));
+        MailFileMove($s_file, $globalConfig->get('imap-del-for-mh.dir.error'));
         return 0;
     }
 
     $ar_done = array();
     foreach ($ar_uid as $account => $i_uid) {
-        Ecl("\t" . 'Account: ' . $account . ', UID: ' . $i_uid);
+        $envUtil->ecl("\t" . 'Account: ' . $account . ', UID: ' . $i_uid);
         $b1 = imap_mail_move($ar_mbox[$account], $i_uid
-            , GetCfg('imap-del-for-mh.mail.' . $account . '.trash')
+            , $globalConfig->get('imap-del-for-mh.mail.' . $account . '.trash')
             , CP_UID);
         $b2 = imap_delete($ar_mbox[$account], $i_uid, FT_UID);
         if ($b1 && $b2) {
@@ -158,9 +164,9 @@ function ImapDel ($s_file) {
 
     // Result
     if (!empty($ar_done)) {
-        Ecl("\t" . 'Deleted from: ' . implode(', ', $ar_done));
+        $envUtil->ecl("\t" . 'Deleted from: ' . implode(', ', $ar_done));
         // Archive file
-        MailFileMove($s_file, GetCfg('imap-del-for-mh.dir.done'));
+        MailFileMove($s_file, $globalConfig->get('imap-del-for-mh.dir.done'));
 
         return 1;
     }
@@ -178,7 +184,7 @@ function ImapDel ($s_file) {
 function ImapSearch ($s_file) {
     global $ar_mbox, $ar_uid;
 
-    Ecl('File: ' . $s_file);
+    $envUtil->ecl('File: ' . $s_file);
 
     if (!is_readable($s_file))
         return;
@@ -200,7 +206,7 @@ function ImapSearch ($s_file) {
         $s_date_before = date('d-M-Y', strtotime($s_date . ' +1 day'));
     }
     else {
-        Ecl('Date: empty.');
+        $envUtil->ecl('Date: empty.');
         return;
     }
 
@@ -212,7 +218,7 @@ function ImapSearch ($s_file) {
         $s_received_before = date('d-M-Y', strtotime($s_received . ' +1 day'));
     }
     else {
-        Ecl('Received: empty.');
+        $envUtil->ecl('Received: empty.');
     }
 
     // From: need decode
@@ -230,7 +236,7 @@ function ImapSearch ($s_file) {
             $s_from = '';
     }
     else {
-        Ecl('From: empty.');
+        $envUtil->ecl('From: empty.');
         return;
     }
 
@@ -239,7 +245,7 @@ function ImapSearch ($s_file) {
         $s_messageid = trim($ar[1]);
     }
     else {
-        Ecl('Message-ID: empty.');
+        $envUtil->ecl('Message-ID: empty.');
         return;
     }
 
@@ -251,13 +257,13 @@ function ImapSearch ($s_file) {
             $s_subject .= $elm->text;
     }
     else {
-        Ecl('Subject: empty.');
+        $envUtil->ecl('Subject: empty.');
     }
 
-    Ecl('From: ' . $s_from_original);
-    Ecl('Date: ' . $s_date_original);
-    Ecl('Subject: ' . $s_subject);
-    Ecl('Message-ID: ' . $s_messageid);
+    $envUtil->ecl('From: ' . $s_from_original);
+    $envUtil->ecl('Date: ' . $s_date_original);
+    $envUtil->ecl('Subject: ' . $s_subject);
+    $envUtil->ecl('Message-ID: ' . $s_messageid);
 
     // Do search
     $s_search = '';
@@ -312,8 +318,8 @@ function ImapSearch ($s_file) {
     }
 
     if (empty($ar_uid)) {
-//      Ecl("\t" . $s_search);
-        Ecl("\t" . 'Mail not found on all server !');
+//      $envUtil->ecl("\t" . $s_search);
+        $envUtil->ecl("\t" . 'Mail not found on all server !');
     }
 
     return;
@@ -342,18 +348,3 @@ function MailFileMove ($s_srce, $s_dir) {
         // Use new filename
         rename($s_srce, $s_dir . strval(++$i));
 } // end of func MailFileMove
-
-
-/*
- * ChangeLog
- *
- * v 0.03 / 2013-07-29
- *  - Fit new config.default.php style
- *
- * V 0.02 / 2013-05-13 /
- *  - Move file with rename, will not replace existing file anymore.
- *
- * V 0.01 / 2013-05-10 / 434423e082
- *  - New.
- */
-?>
