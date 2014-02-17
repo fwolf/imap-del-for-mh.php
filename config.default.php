@@ -58,19 +58,24 @@ $config['imap-del-for-mh.dir.done'] = '';
 $config['imap-del-for-mh.dir.error'] = '';
 // Ignore these file, array or string split by ' ' or ','
 $config['imap-del-for-mh.file.ignore'] = '';
-// Mail account to do del operation, one or multi array
 /*
+// Mail account directory setting
 $config['imap-del-for-mh.mail'] = array(
     'account name'  => array(
-        'mailbox'   => 'mailbox name',
-        'trash'     => 'trash name',
+        'mailbox'   => 'mailbox name',  // eg: [Gmail]/All Mail
+        'trash'     => 'trash name',    // eg: [Gmail]/Trash
     ),
 );
-// Mail server setting
-$config['mail.account.user@domain_tld.server'] = 'gmail';
+
+// Mail account authentication setting
+$config['mail.account.user@domain_tld.provider'] = 'gmail';
 $config['mail.account.user@domain_tld.name'] = 'user@domain.tld';
 $config['mail.account.user@domain_tld.user'] = 'user or user@domain.tld';
 $config['mail.account.user@domain_tld.pass'] = 'pass';
+
+// Mail account server setting
+$config['mail.provider.gmail.imap.host'] = 'imap.gmail.com';
+$config['mail.provider.gmail.imap.port'] = 993;
 */
 
 
