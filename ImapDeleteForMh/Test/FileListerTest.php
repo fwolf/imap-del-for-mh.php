@@ -16,7 +16,7 @@ class FileListerTest extends PHPUnitTestCase
 {
     protected function buildMock()
     {
-        $fileLister = new FileLister(vfsStream::url('mhDir'));
+        $fileLister = new FileLister(vfsStream::url('mhDir/mh/'));
 
         return $fileLister;
     }
@@ -25,8 +25,11 @@ class FileListerTest extends PHPUnitTestCase
     public static function setUpBeforeClass()
     {
         $root = vfsStream::setup('mhDir');
+        $mhDir = vfsStream::newDirectory('mh');
+        $root->addChild($mhDir);
         vfsStream::copyFromFileSystem(
-            __DIR__ . '/mhDir'
+            __DIR__ . '/testmail',
+            $mhDir
         );
     }
 
@@ -37,9 +40,11 @@ class FileListerTest extends PHPUnitTestCase
 
         $this->assertNotEmpty($fileLister->get());
 
-        $fileLister->ignore(' , testmail-1,');
+        $this->assertEquals('1', current($fileLister->get()));
 
-        $this->assertEmpty($fileLister->get());
+        $fileLister->ignore(' , 1,');
+
+        $this->assertNotEquals('1', current($fileLister->get()));
     }
 
 
@@ -50,7 +55,7 @@ class FileListerTest extends PHPUnitTestCase
         $fileList = $fileLister->get();
 
         $this->assertGreaterThan(0, count($fileList));
-        $this->assertEquals('testmail-1', current($fileList));
+        $this->assertEquals('1', current($fileList));
     }
 }
 
