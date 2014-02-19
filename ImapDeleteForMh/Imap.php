@@ -24,12 +24,20 @@ class Imap
      * Constructor
      *
      * @param   string  $host
+     * @param   string  $port
      * @param   string  $user
      * @param   string  $pass
+     * @param   string  $mailbox
      */
-    public function __construct($host, $user, $pass)
+    public function __construct($host, $port, $user, $pass, $mailbox)
     {
-        $this->connection = $this->connect($host, $user, $pass);
+        $this->connection = $this->connect(
+            $host,
+            $port,
+            $user,
+            $pass,
+            $mailbox
+        );
     }
 
 
@@ -37,14 +45,17 @@ class Imap
      * Connect to IMAP server
      *
      * @param   string  $host
+     * @param   string  $port
      * @param   string  $user
      * @param   string  $pass
+     * @param   string  $mailbox
      * @return  resource
      */
-    protected function connect($host, $user, $pass)
+    protected function connect($host, $port, $user, $pass, $mailbox)
     {
         try {
-            $connection = imap_open($host, $user, $pass);
+            $hostString = "\{$host:$port/imap/ssl/novalidate-cert\}$mailbox";
+            $connection = imap_open($hostString, $user, $pass);
 
             return $connection;
 

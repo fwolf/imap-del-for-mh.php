@@ -26,7 +26,7 @@ class ImapTest extends PHPUnitTestCase
         $imap = $this->getMock(
             '\Fwolf\Bin\ImapDeleteForMh\Imap',
             null,
-            array('host', 'user', 'pass')
+            array('host', '993', 'user', 'pass', '[Gmail]/All Mail')
         );
 
         return $imap;
