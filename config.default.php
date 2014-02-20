@@ -102,5 +102,9 @@ if ('config.default.php' == basename(__FILE__)) {
         __DIR__ .  '/ImapDeleteForMh/'
     );
 
-    require __DIR__ . '/vendor/autoload.php';
+
+    // vfsStream for debug, not need in production environment
+    if (is_readable(__DIR__ . '/vendor/autoload.php')) {
+        require __DIR__ . '/vendor/autoload.php';
+    }
 }
