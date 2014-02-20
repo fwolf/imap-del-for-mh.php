@@ -1,3 +1,4 @@
+config.php
 coverage-html/
 phpunit.xml
 vendor/

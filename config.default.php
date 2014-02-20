@@ -72,11 +72,11 @@ $config['mail.account.user@domain_tld.provider'] = 'gmail';
 $config['mail.account.user@domain_tld.name'] = 'user@domain.tld';
 $config['mail.account.user@domain_tld.user'] = 'user or user@domain.tld';
 $config['mail.account.user@domain_tld.pass'] = 'pass';
+*/
 
 // Mail account server setting
 $config['mail.provider.gmail.imap.host'] = 'imap.gmail.com';
 $config['mail.provider.gmail.imap.port'] = 993;
-*/
 
 
 /***********************************************************
