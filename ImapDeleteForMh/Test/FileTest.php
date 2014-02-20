@@ -69,7 +69,7 @@ class FileTest extends PHPUnitTestCase
     {
         $file = $this->buildMock('1');
         $this->assertEquals(
-            'CAL31YSwTVMq+Vdx7GD5BH4=oO2=Xi5jQToSuuYwdE6T4i19d-A@mail.gmail.com',
+            '<CAL31YSwTVMq+Vdx7GD5BH4=oO2=Xi5jQToSuuYwdE6T4i19d-A@mail.gmail.com>',
             $file->getMessageId()
         );
 

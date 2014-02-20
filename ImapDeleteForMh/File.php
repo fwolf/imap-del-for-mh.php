@@ -99,7 +99,8 @@ class File
     {
         $i = preg_match('/\nMessage-ID:(.+?)\n/i', $this->content, $match);
         if (1 === $i) {
-            return trim($match[1], ' <>');
+            // Message ID in imap_fetch_overview() result has '<>', so keep it
+            return trim($match[1]);
         } else {
             return null;
         }
