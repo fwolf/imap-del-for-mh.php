@@ -16,7 +16,7 @@
  * @author      Fwolf <fwolf.aide+imap-del-for-mh.php@gmail.com>
  * @license     http://opensource.org/licenses/mit-license MIT
  * @since       2013-05-10
- * @version     2.0
+ * @version     2.0.1
  */
 
 use Fwlib\Util\UtilContainer;
