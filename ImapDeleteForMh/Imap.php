@@ -54,7 +54,7 @@ class Imap
     protected function connect($host, $port, $user, $pass, $mailbox)
     {
         try {
-            $hostString = "\{$host:$port/imap/ssl/novalidate-cert\}$mailbox";
+            $hostString = "{{$host}:$port/imap/ssl/novalidate-cert}$mailbox";
             $connection = imap_open($hostString, $user, $pass);
 
             return $connection;
@@ -157,7 +157,8 @@ class Imap
         $dateSince = date('d-M-Y', strtotime($date . '-1 day'));
         $dateBefore = date('d-M-Y', strtotime($date . '+1 day'));
 
-        $condition = "SINCE '$dateSince' BEFORE '$dateBefore'";
+        // Only double quote allowed in condition
+        $condition = "SINCE \"$dateSince\" BEFORE \"$dateBefore\"";
 
         if (1 === preg_match('/<(.+)>/', $from, $match)) {
             $from = $match[1];
@@ -165,7 +166,7 @@ class Imap
         $from = addslashes($from);
 
         if (false !== strpos($from, '@')) {
-            $condition .= " From '$from'";
+            $condition .= " FROM \"$from\"";
         }
 
         return imap_search($this->connection, $condition, SE_UID);
@@ -181,7 +182,8 @@ class Imap
         $receivedSince = date('d-M-Y', strtotime($received . '-1 day'));
         $receivedBefore = date('d-M-Y', strtotime($received . '+1 day'));
 
-        $condition = "SINCE '$receivedSince' BEFORE '$receivedBefore'";
+        // Only double quote allowed in condition
+        $condition = "SINCE \"$receivedSince\" BEFORE \"$receivedBefore\"";
 
         return imap_search($this->connection, $condition, SE_UID);
     }

@@ -95,7 +95,7 @@ class ImapTest extends PHPUnitTestCase
 
         $this->assertEquals(-1, $imap->search($config));
         $this->assertEquals(
-            "SINCE '18-Feb-2014' BEFORE '20-Feb-2014' From 'sender@domain.tld'",
+            "SINCE \"18-Feb-2014\" BEFORE \"20-Feb-2014\" FROM \"sender@domain.tld\"",
             self::$imap_search_condition
         );
 
@@ -105,7 +105,7 @@ class ImapTest extends PHPUnitTestCase
 
         $this->assertEquals(-1, $imap->search($config));
         $this->assertEquals(
-            "SINCE '19-Feb-2014' BEFORE '21-Feb-2014'",
+            "SINCE \"19-Feb-2014\" BEFORE \"21-Feb-2014\"",
             self::$imap_search_condition
         );
 
