@@ -8,9 +8,7 @@ use Fwlib\Config\GlobalConfig;
  * Config getter
  *
  * @copyright   Copyright 2014 Fwolf
- * @author      Fwolf <fwolf.aide+imap-del-for-mh.php@gmail.com>
  * @license     http://opensource.org/licenses/mit-license MIT
- * @since       2014-02-17
  */
 class Config extends AbstractSingleton
 {

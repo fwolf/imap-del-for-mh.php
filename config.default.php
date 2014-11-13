@@ -3,9 +3,7 @@
  * Default configure file
  *
  * @copyright   Copyright 2013-2014 Fwolf
- * @author      Fwolf <fwolf.aide+imap-del-for-mh.php@gmail.com>
  * @license     http://opensource.org/licenses/mit-license MIT
- * @since       2014-01-22
  */
 
 use Fwlib\Base\ClassLoader;

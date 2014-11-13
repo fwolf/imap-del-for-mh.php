@@ -6,9 +6,7 @@ use Fwolf\Bin\ImapDeleteForMh\Imap;
 
 /**
  * @copyright   Copyright 2014 Fwolf
- * @author      Fwolf <fwolf.aide+imap-del-for-mh.php@gmail.com>
  * @license     http://opensource.org/licenses/mit-license MIT
- * @since       2014-02-19
  */
 class ImapTest extends PHPUnitTestCase
 {

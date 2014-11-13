@@ -13,9 +13,7 @@
  * delete, then archive to another MH directory.
  *
  * @copyright   Copyright 2013-2014, Fwolf
- * @author      Fwolf <fwolf.aide+imap-del-for-mh.php@gmail.com>
  * @license     http://opensource.org/licenses/mit-license MIT
- * @since       2013-05-10
  * @version     2.0.1
  */
 
