@@ -85,9 +85,8 @@ class ConfigTest extends PHPUnitTestCase
             $config->getMailAccountDirectory('testAccount')
         );
 
-        $this->assertEqualArray(
-            array('testAccount'),
-            $config->getMailAccountList()
+        $this->assertTrue(
+            in_array('testAccount', $config->getMailAccountList())
         );
     }
 
