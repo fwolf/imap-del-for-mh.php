@@ -31,12 +31,6 @@ if (is_readable(__DIR__ . '/../../vendor/autoload.php')) {
     $classLoader = require __DIR__ . '/vendor/autoload.php';
 }
 
-// Register self to class loader
-$classLoader->addPsr4(
-    'Fwolf\\Bin\\ImapDeleteForMh\\',
-    __DIR__ .  '/ImapDeleteForMh/'
-);
-
 
 // Init config data array
 $config = array();

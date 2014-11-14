@@ -3,6 +3,11 @@
   "description": "A tool to scan mail in MH folder, find them in imap server by message_id, delete, then archive to another MH directory.",
   "type": "project",
   "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Fwolf\\Bin\\ImapDeleteForMh\\": "ImapDeleteForMh/"
+    }
+  },
   "require": {
     "fwlib/fwlib": "2.*"
   },
