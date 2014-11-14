@@ -23,7 +23,7 @@ use Fwolf\Bin\ImapDeleteForMh\FileLister;
 use Fwolf\Bin\ImapDeleteForMh\File;
 use Fwolf\Bin\ImapDeleteForMh\Imap;
 
-require __DIR__ . '/config.default.php';
+require __DIR__ . '/bootstrap.php';
 
 
 $utilContainer = UtilContainer::getInstance();
