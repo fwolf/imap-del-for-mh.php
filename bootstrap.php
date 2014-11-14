@@ -6,6 +6,9 @@
  *  - Register ClassLoader
  *  - Load default and user config
  *
+ *  When use as a submodule, autoload.php and config.php need to search first
+ *  on upper directory.
+ *
  * @copyright   Copyright 2014 Fwolf
  * @license     http://opensource.org/licenses/MIT MIT
  */
@@ -21,12 +24,24 @@ if (0 > version_compare(PHP_VERSION, '5.4.0')) {
 }
 
 
+// Include autoloader
+if (is_readable(__DIR__ . '/../../vendor/autoload.php')) {
+    $classLoader = require __DIR__ . '/../../vendor/autoload.php';
+} elseif (is_readable(__DIR__ . '/vendor/autoload.php')) {
+    $classLoader = require __DIR__ . '/vendor/autoload.php';
+}
+
+// Register self to class loader
+$classLoader->addPsr4(
+    'Fwolf\\Bin\\ImapDeleteForMh\\',
+    __DIR__ .  '/ImapDeleteForMh/'
+);
+
+
 // Init config data array
 $config = array();
 
 // Load user config if exists
-// If use as git submodule, commonly this is put in vendor/ directory,
-// will try to load config of parent repository.
 if (file_exists(__DIR__ . '/../../config.php')) {
     require __DIR__ . '/../../config.php';
 } elseif (file_exists(__DIR__ . '/config.php')) {
@@ -39,22 +54,6 @@ require 'config.default.php';
 
 // Merge user and default config
 $config = array_merge($config, $userConfig);
-
-
-// Include autoloader of Fwlib, need before other library
-require $config['lib.path.fwlib'] . 'autoload.php';
-
-// Register autoload of other external library, $classLoader is declared in
-// autoload.php of Fwlib, can use below.
-$classLoader->addPrefix(
-    'Fwolf\Bin\ImapDeleteForMh',
-    __DIR__ .  '/ImapDeleteForMh/'
-);
-
-// vfsStream for debug, not need in production environment
-if (is_readable(__DIR__ . '/vendor/autoload.php')) {
-    require __DIR__ . '/vendor/autoload.php';
-}
 
 // Store config in GlobalConfig instance
 GlobalConfig::getInstance()->load($config);

@@ -14,9 +14,6 @@
  */
 
 
-$config['lib.path.fwlib'] = 'fwlib/';
-
-
 // Max files for one-run
 $config['imap-del-for-mh.batchsize'] = 100;
 // Original mh file dir
