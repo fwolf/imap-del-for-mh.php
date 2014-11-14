@@ -4,11 +4,11 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "20e43aa2e382c16d42314afe6a9cb402",
+    "hash": "180b1f23338f85b1da264d578722d9dd",
     "packages": [
         {
             "name": "fwlib/fwlib",
-            "version": "dev-master",
+            "version": "v2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fwolf/fwlib.git",
@@ -81,9 +81,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "fwlib/fwlib": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "platform": [],
     "platform-dev": []

@@ -4,7 +4,7 @@
   "type": "project",
   "license": "MIT",
   "require": {
-    "fwlib/fwlib": "dev-master"
+    "fwlib/fwlib": "2.*"
   },
   "require-dev": {
     "mikey179/vfsStream": "1.2.0"
