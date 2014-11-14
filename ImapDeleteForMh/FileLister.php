@@ -58,7 +58,9 @@ class FileLister
             $ignoreList = explode(',', $ignoreList);
         }
 
-        $this->fileList = array_diff($this->fileList, $ignoreList);
+        if (!empty($ignoreList)) {
+            $this->fileList = array_diff($this->fileList, $ignoreList);
+        }
     }
 
 
