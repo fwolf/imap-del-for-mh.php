@@ -13,7 +13,6 @@
  * @license     http://opensource.org/licenses/MIT MIT
  */
 
-use Fwlib\Base\ClassLoader;
 use Fwlib\Config\GlobalConfig;
 
 // Record running start time, usefull for count total process time cost, as of
