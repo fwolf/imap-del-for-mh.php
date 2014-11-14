@@ -1,0 +1,17 @@
+language: php
+php:
+    - 5.4
+    - 5.3
+
+
+install:
+    - composer install
+
+
+before_script:
+    - echo 'date.timezone = "Asia/ShangHai"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+
+
+script:
+    - phpunit --coverage-text
+
