@@ -15,7 +15,7 @@
 
 use Fwlib\Config\GlobalConfig;
 
-// Record running start time, usefull for count total process time cost, as of
+// Record running start time, useful for count total process time cost, as of
 // PHP 5.4.0, $_SERVER['REQUEST_TIME_FLOAT'] is build-in.
 if (0 > version_compare(PHP_VERSION, '5.4.0')) {
     list($msec, $sec) = explode(' ', microtime(false));
