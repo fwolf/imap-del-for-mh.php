@@ -138,7 +138,7 @@ namespace Fwolf\Bin\ImapDeleteForMh;
 
 function imap_delete($imaapStream, $uid, $option)
 {
-    if (is_null(\Fwolf\Bin\ImapDeleteForMh\Test\ImapTest::$imap_delete)) {
+    if (is_null(Test\ImapTest::$imap_delete)) {
         throw new \Exception('imap delete fail');
 
     } else {
@@ -162,8 +162,7 @@ function imap_fetch_overview($imapStream, $sequence, $option)
 
         $mail->uid = $uid;
         if (1 == $uid) {
-            $mail->message_id = \Fwolf\Bin\ImapDeleteForMh\Test\ImapTest::
-                $dummyMessageId;
+            $mail->message_id = Test\ImapTest::$dummyMessageId;
         } else {
             $mail->message_id = $uid;
         }
@@ -183,19 +182,18 @@ function imap_mail_move($imapStream, $uid, $mailbox, $option)
 
 function imap_open($host, $user, $pass)
 {
-    if (is_null(\Fwolf\Bin\ImapDeleteForMh\Test\ImapTest::$imap_open)) {
+    if (is_null(Test\ImapTest::$imap_open)) {
         throw new \Exception('imap connect fail');
 
     } else {
-        return \Fwolf\Bin\ImapDeleteForMh\Test\ImapTest::$imap_open;
+        return Test\ImapTest::$imap_open;
     }
 }
 
 
 function imap_search($imapStream, $condition, $option)
 {
-    \Fwolf\Bin\ImapDeleteForMh\Test\ImapTest::$imap_search_condition =
-        $condition;
+    Test\ImapTest::$imap_search_condition = $condition;
 
-    return \Fwolf\Bin\ImapDeleteForMh\Test\ImapTest::$imap_search;
+    return Test\ImapTest::$imap_search;
 }
