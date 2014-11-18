@@ -35,15 +35,15 @@ if (is_readable(__DIR__ . '/../../vendor/autoload.php')) {
 $config = array();
 
 // Load user config if exists
-if (file_exists(__DIR__ . '/../../config.php')) {
+if (is_readable(__DIR__ . '/../../config.php')) {
     require __DIR__ . '/../../config.php';
-} elseif (file_exists(__DIR__ . '/config.php')) {
+} elseif (is_readable(__DIR__ . '/config.php')) {
     require __DIR__ . '/config.php';
 }
 $userConfig = $config;
 
 // Load default config
-require 'config.default.php';
+require __DIR__ . '/config.default.php';
 
 // Merge user and default config
 $config = array_merge($config, $userConfig);
