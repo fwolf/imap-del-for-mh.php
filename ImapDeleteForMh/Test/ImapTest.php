@@ -135,7 +135,6 @@ class ImapTest extends PHPUnitTestCase
 /* Mock imap function */
 namespace Fwolf\Bin\ImapDeleteForMh;
 
-
 function imap_delete($imapStream, $uid, $option)
 {
     if (is_null(Test\ImapTest::$imap_delete)) {

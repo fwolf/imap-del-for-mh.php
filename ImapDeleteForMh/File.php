@@ -1,7 +1,6 @@
 <?php
 namespace Fwolf\Bin\ImapDeleteForMh;
 
-
 /**
  * Mail file, in MH directory
  *
